@@ -15,9 +15,9 @@
 동기화 예를 들어보겠습니다. 음료수 자판기가 있고 사용자는 돈을 투입하여 자판기를 사용합니다. 자판기는 사용자가 음료수를 선택할때까지 무한정 대기해야 합니다. 사용자가 음료수를 선택하면 어떤걸 선택했는지 확인하고 사용자에게 음료수 줍니다.
 
 <pre><code>
-getDrink(int coin) {
+boolean getDrink(int coin) {
    int selectPosition = selectDrink(coin); // 사용자가 선택할때까지 기다립니다.
-   getItem(selectPosition);
+   return getItem(selectPosition);
 }
 </pre></code>
 
@@ -46,7 +46,7 @@ Thread mChooseDrink = new Thread(new Runnable {
 
 int nUserCoint;
 
-getDrink() {
+void getDrink() {
    nUserCoin = 0;
    mUserCoin.start();
    mChooseDrink.start();
