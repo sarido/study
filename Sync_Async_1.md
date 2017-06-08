@@ -15,8 +15,40 @@
 동기화 예를 들어보겠습니다. 음료수 자판기가 있고 사용자는 돈을 투입하여 자판기를 사용합니다. 자판기는 사용자가 음료수를 선택할때까지 무한정 대기해야 합니다. 사용자가 음료수를 선택하면 어떤걸 선택했는지 확인하고 음료수를 출고 시키죠.
 
 <pre><code>
-while(true){
-   int selectPosition = userSelected();
-   if(getItem(selectPosition)) break;
+
+Thread mChooseDrink = new Thread(new Runnable {
+   void run() {
+      while(true){
+         ...
+         int selectPosition = didyouchoose(); // 사용자가 선택했는지 확인 합니다.
+         if(getItem(selectPosition)) break;   // 사용자가 선택한 값이 처리되면 반복문을 종료합니다.
+      }
+   }
 }
+
+...
+
+main() {
+   mChooseDrink.start();
+}
+
+...
 </pre></code>
+
+위 코드에서 didyouchoose() 라는 함수로 사용자가 선택 할때까지 계속해서 반복하며 확인할 것 입니다. <br>
+<br>
+자판기 : 골랏니?<br>
+사용자 : 아니<br>
+자판기 : 골랏니?<br>
+사용자 : 아니<br>
+자판기 : 골랏니?<br>
+사용자 : 아니<br>
+자판기 : 골랏니?<br>
+사용자 : 아니, 좀 기다려봐<br>
+자판기 : 골랏니?<br>
+사용자 : .....아니<br>
+<br>
+물론, 자판기가 사용자에게 직접 물어보진 않겠지만 ChooseDrink Thread는 그 작업을 하고 있습니다. 선택할때까지요.
+<br>
+
+
